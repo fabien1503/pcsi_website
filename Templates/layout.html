@@ -1,0 +1,42 @@
+{%load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+		{%block script%}{%endblock script%}
+		<title>PCSI Aristide</title>
+	</head>
+	
+	<body>
+		<div id="blockpage">
+			<header>
+				<h1><a href='/'>PCSI Aristide Briand</a></h1>
+				<nav>
+					{% block navigation %}
+					<ul>
+						<li id='colloscope'><a href='/Documents/Colloscope.pdf'>Colloscope</a></li>
+						{% if user.is_authenticated %}
+						<li id='notes'><a href='/notes/'>Notes</a></li>
+						<li id='documents'><a href='/documents/'>Documents</a></li>
+						<li id='annuaire'><a href='/connexion/annuaire/'>Annuaire</a></li>
+						<li id='deconnexion'><a href='/connexion/deconnexion'>Déconnexion</a></li>
+						{% else %}
+						<li id='connexion'><a href='/connexion'>Connexion</a></li>
+						{% endif %}
+					</ul>
+					{% endblock navigation%}
+				</nav>
+			</header>
+
+			{% block contenu %}{%endblock contenu%}
+			
+			<footer>
+				<p>Si vous rencontrez des problèmes pour vous connecter ou si vous avez besoin de me joindre, c'est ici</p>
+			</footer>
+		</div>
+	</body>
+</html>
+
+
+{% block donnees%}{%endblock donnees%}

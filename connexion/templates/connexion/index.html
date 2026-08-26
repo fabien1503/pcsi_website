@@ -1,0 +1,19 @@
+{%extends "../layout.html"%}
+
+{%block contenu%}
+<section class="formConnexion">
+    <p>
+        {%if erreurLogin%}<span class="pbConnexion"> {{erreurLogin}} </span>{% endif %}   
+        <form method="post">{% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Connexion">
+        </form>
+    </p>
+    <p>
+        Si vous n'êtes pas encore inscrit sur le site vous pouvez le faire <a href="/connexion/inscription/">ici</a>
+    </p>
+    <p>
+        Si vous avez perdu votre mot de passe c'est <a href="/connexion/password_reset/">ici</a>
+    </p>
+</section>
+{%endblock%}

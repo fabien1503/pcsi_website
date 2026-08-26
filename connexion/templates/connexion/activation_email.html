@@ -1,0 +1,8 @@
+<p>Bonjour {{ user.username }},</p>
+<p>Pour finaliser votre inscription, veuillez cliquer sur le bouton ci-dessous pour valider votre adresse e-mail :</p>
+<p>
+    <a href="{{ lien_activation }}" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
+        Confirmer mon inscription
+    </a>
+</p>
+<p>Si le bouton ne fonctionne pas, copiez-collez ce lien dans votre navigateur : <br> {{ lien_activation }}</p>

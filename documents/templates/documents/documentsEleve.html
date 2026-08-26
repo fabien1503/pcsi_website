@@ -1,0 +1,80 @@
+{%extends "../layout.html"%}
+{%load static %}
+
+
+{%block contenu%}
+
+
+{%for dic in DocByMatieres%}
+<section>
+    <h1>Documents de {{dic.matiere.0}}</h1>
+    <div class="partie">
+    {%for doc in dic.CR%}
+    {%if forloop.first%}
+    <h2>Documents de cours</h2>
+        <table class="documents_cours">
+            <tr>
+                <th>Titre</th>
+            </tr>{%endif%}
+            <tr>
+                <td><a href="/documents/consulter/{{dic.matiere.1}}/{{doc.0.id}}">{{doc.0.titre}}</a></td>
+            </tr>
+        {%if forloop.last%}</table>{%endif%}
+    {%endfor%}
+    </div>
+    <div class="partie">
+    {%for doc in dic.TD%}
+    {%if forloop.first%}
+    <h2>TDs</h2>
+        <table class="documents_TD">
+            <tr>
+                <th>Titre</th>
+                <th>Correction</th>
+            </tr>{%endif%}
+            <tr>
+                <td><a href="/documents/consulter/{{dic.matiere.1}}/{{doc.0.id}}">{{doc.0.titre}}</a></td>
+                <td>
+                    {%if doc.1%}<a href="/documents/consulter/{{dic.matiere.1}}/correction/{{doc.1.id}}">{{doc.1.titre}}</a>{%endif%}
+                </td>
+            </tr>
+        {%if forloop.last%}</table>{%endif%}
+    {%endfor%}
+    </div>
+    <div class="partie">    
+    {%for doc in dic.DS%}
+    {%if forloop.first%}
+    <h2>DS</h2>
+        <table class="documents_DS">
+            <tr>
+                <th>Titre</th>
+                <th>Correction</th>
+            </tr>{%endif%}
+            <tr>
+                <td><a href="/documents/consulter/{{dic.matiere.1}}/{{doc.0.id}}">{{doc.0.titre}}</a></td>
+                <td>
+                    {%if doc.1%}<a href="/documents/consulter/{{dic.matiere.1}}/correction/{{doc.1.id}}">{{doc.1.titre}}</a>{%endif%}
+                </td>
+            </tr>
+        {%if forloop.last%}</table>{%endif%}
+    {%endfor%}
+    {%for doc in dic.DM%}
+    {%if forloop.first%}
+    <h2>DM</h2>
+        <table class="documents_DM">
+            <tr>
+                <th>Titre</th>
+                <th>Correction</th>
+            </tr>{%endif%}
+            <tr>
+                <td><a href="/documents/consulter/{{dic.matiere.1}}/{{doc.0.id}}">{{doc.0.titre}}</a></td>
+                <td>
+                    {%if doc.1%}<a href="/documents/consulter/{{dic.matiere.1}}/correction/{{doc.1.id}}">{{doc.1.titre}}</a>{%endif%}
+                </td>
+            </tr>
+        {%if forloop.last%}</table>{%endif%}
+    {%endfor%}
+</div>
+</section>
+{%endfor%}
+
+{%endblock%}

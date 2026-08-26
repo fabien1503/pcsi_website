@@ -1,0 +1,36 @@
+{%extends "../layout.html"%}
+{%load static %}
+
+{%block script%}
+<script src="{% static '/Scripts/NotesEleves.js' %}" defer></script>
+{%endblock%}
+
+{%block contenu%}
+
+{%for dic in NotesByMatiere%}
+<section>
+	{%if dic.matiere.0 == "AN"%}<h1>Colles d'Anglais</h1>{%else%}<h1>Colles de {{dic.matiere.1}}</h1>{%endif%}
+	{%for dicSemestre in dic.listeNotes%}<h3>Notes du semestre {{dicSemestre.semestre}}</h3>
+	<table>
+		<tr>
+			<td class="tete">Date</td>
+			{%for date in dicSemestre.listeDate%}<td>{{date}}</td>
+			{%endfor%}<td class="tete">Moyenne</td>
+		</tr>
+		<tr>
+			<td class="tete">Colleur</td>
+			{%for colleur in dicSemestre.listeColleur%}<td>{{colleur}}</td>
+			{%endfor%}<td rowspan="2">{{dicSemestre.moyenne}}</td>
+		</tr>
+		<tr>
+			<td class="tete">Note</td>
+			{%for valeur in dicSemestre.listeValeur%}<td class="Note">{{valeur}}</td>
+			{%endfor%}
+		</tr>
+	</table>
+	{%endfor%}
+</section>
+{%endfor%}
+
+
+{%endblock%}

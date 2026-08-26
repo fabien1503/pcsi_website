@@ -1,0 +1,12 @@
+{%extends "../layout.html"%}
+
+{%block contenu%}
+<div class="inscription">
+	<h2>Créer un compte</h2>
+	<form method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+	<button type="submit">S'inscrire</button>
+	</form>
+<div>
+{%endblock%}

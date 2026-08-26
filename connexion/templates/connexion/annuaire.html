@@ -1,0 +1,46 @@
+{%extends "../layout.html"%}
+{%load static %}
+
+{%block contenu%}
+
+<section>
+<h2>Annuaire des élèves</h2>
+<table class="annuaire">
+	<tr>
+		<th>Groupe</th>
+		<th>Elèves</th>
+		<th>Adresse mail</th>
+		<th>Ecrire au groupe</th>
+		<th>Ecrire à la classe</th>
+	</tr>
+	{%for groupe in listeGroupes%}
+		{%for eleve in groupe.listeEleves%}
+	<tr>
+		{%if forloop.first%}<td rowspan={{groupe.listeEleves|length}}>{{groupe}}</td>{%endif%}
+		<td>{{eleve}}</td>
+		<td><a href="mailto:{{eleve.email}}">{{eleve.email}}</a></td>
+		{%if forloop.first%}<td rowspan={{groupe.listeEleves|length}}><a href="mailto:{%for e in groupe.listeEleves%}{{e.email}},{%endfor%}">Ecrire au groupe</a></td>
+		{%if forloop.parentloop.first%}<td rowspan={{NbEleves}}><a href="mailto:{{listeEmails}}">Ecrire à la classe</a></td>{%endif%}{%endif%}
+	</tr>{%endfor%}
+	{%endfor%}
+</table>
+</section>
+
+<section>
+<h2>Annuaire des colleurs</h2>
+{%for tuple in listeColleur%}
+<div class="annuairecolleur">
+<h3>Colleurs {%if tuple.0 == "Anglais"%} d'Anglais {%else%} de {{tuple.0}}{%endif%}</h3>
+<table class="annuaire">
+	{%for colleur in tuple.1%}
+	<tr>
+		<td>{{colleur}}</td>
+		<td><a href="mailto:{{colleur.colleur.email}}">{{colleur.colleur.email}}</a></td>
+	</tr>
+	{%endfor%}
+</table>
+</div>
+{%endfor%}
+</section>
+
+{%endblock%}

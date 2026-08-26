@@ -1,0 +1,104 @@
+{%extends "../layout.html"%}
+{%load static %}
+
+{%block script%}
+<script src="{% static '/Scripts/DocumentsProf.js' %}" defer></script>
+{%endblock%}
+
+{%block contenu%}
+
+<section class="formDocuments">
+	<h1 id="titre_formulaire">Nouveau document à poster</h1>
+    <p>
+    	{%if message%}<span class="message"> {{message}} </span>{% endif %}
+        <form id="formulaire" enctype="multipart/form-data" method="post">{% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Poster">
+        </form>
+    </p>
+</section>
+
+{%for dic in DocByMatieres%}
+<section>
+    <h1>Documents de {{dic.matiere.0}}</h1>
+    <div class="partie">
+    {%for doc in dic.CR%}
+    {%if forloop.first%}
+    <h2>Documents de cours</h2>
+        <table class="documents_cours">
+            <tr>
+                <th>Titre</th>
+                <th>Action</th>
+            </tr>{%endif%}
+            <tr>
+                <td><a href="/documents/consulter/{{dic.matiere.1}}/{{doc.0.id}}">{{doc.0.titre}}</a></td>
+                <td><object class="boutonsuppression clicable" doc_id={{doc.0.id}}>Supprimer</object></td>
+            </tr>
+        {%if forloop.last%}</table>{%endif%}
+    {%endfor%}
+    </div>
+    <div class="partie">
+    {%for doc in dic.TD%}
+    {%if forloop.first%}
+    <h2>TDs</h2>
+        <table class="documents_TD">
+            <tr>
+                <th>Titre</th>
+                <th>Correction</th>
+                <th>Action</th>
+            </tr>{%endif%}
+            <tr>
+                <td><a href="/documents/consulter/{{dic.matiere.1}}/{{doc.0.id}}">{{doc.0.titre}}</a></td>
+                <td>
+                    {%if doc.1%}<a href="/documents/consulter/{{dic.matiere.1}}/correction/{{doc.1.id}}">{{doc.1.titre}}</a>
+                    {%else%}<button class="boutton_ajout" doc_id={{doc.0.id}} doc_titre={{doc.0.titre}}>Ajouter Correction</button>{%endif%}
+                </td>
+                <td><object class="boutonsuppression clicable" doc_id={{doc.0.id}}>Supprimer</object></td>
+            </tr>
+        {%if forloop.last%}</table>{%endif%}
+    {%endfor%}
+    </div>
+    <div class="partie">    
+    {%for doc in dic.DS%}
+    {%if forloop.first%}
+    <h2>DS</h2>
+        <table class="documents_DS">
+            <tr>
+                <th>Titre</th>
+                <th>Correction</th>
+                <th>Action</th>
+            </tr>{%endif%}
+            <tr>
+                <td><a href="/documents/consulter/{{dic.matiere.1}}/{{doc.0.id}}">{{doc.0.titre}}</a></td>
+                <td>
+                    {%if doc.1%}<a href="/documents/consulter/{{dic.matiere.1}}/correction/{{doc.1.id}}">{{doc.1.titre}}</a>
+                    {%else%}<button class="boutton_ajout" doc_id={{doc.0.id}} doc_titre={{doc.0.titre}}>Ajouter Correction</button>{%endif%}
+                </td>
+                <td><object class="boutonsuppression clicable" doc_id={{doc.0.id}}>Supprimer</object></td>
+            </tr>
+        {%if forloop.last%}</table>{%endif%}
+    {%endfor%}
+    {%for doc in dic.DM%}
+    {%if forloop.first%}
+    <h2>DM</h2>
+        <table class="documents_DM">
+            <tr>
+                <th>Titre</th>
+                <th>Correction</th>
+                <th>Action</th>
+            </tr>{%endif%}
+            <tr>
+                <td><a href="/documents/consulter/{{dic.matiere.1}}/{{doc.0.id}}">{{doc.0.titre}}</a></td>
+                <td>
+                    {%if doc.1%}<a href="/documents/consulter/{{dic.matiere.1}}/correction/{{doc.1.id}}">{{doc.1.titre}}</a>
+                    {%else%}<button class="boutton_ajout" doc_id={{doc.0.id}} doc_titre={{doc.0.titre}}>Ajouter Correction</button>{%endif%}
+                </td>
+                <td><object class="boutonsuppression clicable" doc_id={{doc.0.id}}>Supprimer</object></td>
+            </tr>
+        {%if forloop.last%}</table>{%endif%}
+    {%endfor%}
+</div>
+</section>
+{%endfor%}
+
+{%endblock%}

@@ -1,0 +1,107 @@
+{%extends "../layout.html"%}
+{%load static %}
+
+{%block script%}
+<script src="{% static '/Scripts/NotesColleurs.js' %}" defer></script>
+{%endblock%}
+
+{%block contenu%}
+<section>
+	<h2>Actions</h2>
+	<p id="actionsElements">
+		<span id="ajouterColle">Ajouter une colle</span>
+		<span id="creationdocadministratif">Création du document administratif</span>
+	</p>
+</section>
+
+<section id="formColle">
+	<h2>Ajout d'une nouvelle colle</h2>
+	<form method="post" action="/colleur/nouvellecolle" id="formulaire">{% csrf_token %}
+		<p>
+			<label for="semestre">Quel est le semestre de la colle ?</label>
+			<select name="semestre" id="choixSemestre">
+				<option value="1">Premier semestre</option>
+				<option value="2">Second semestre</option>
+			</select>
+		</p>
+		<p>
+			<label for="groupColle">Quel est le numéro du groupe de colle ?</label>
+			<select name="groupColle" id="groupColle">
+				<option value=""></option>
+			</select>
+			<label for="dateColle">Quelle est la date de la colle ?</label>
+			<input id="datecolle" type="date" name="dateColle" value="{{aujourdhui}}">
+		</p>
+		<table id="listeElevesColle">
+		</table>
+		<p>
+			<label for="horaire">Quel est l'horaire de la colle ?</label>
+			<input type="time" name="horaire" id="horaireColle">
+			<label for="salle">Quelle est la salle de la colle ?</label>
+			<input type="text" name="salle" id="salleColle">
+		</p>
+		<p>
+			<label for="sujet">Quel est le sujet de la colle ?</label>
+			<input type="text" name="sujet" size="50" id="sujetColle">
+		</p>
+		<p class="centrer"><input type="button" id="boutonform" value="Enregistrer"></p>
+	</form>
+</section>
+
+<section id="liste des colles effectuees">
+	<h2>Liste des colles effectuées</h2>
+	<table>
+		<tr>
+			<th>Date</th>
+			<th>Groupe de colle</th>
+			<th>Liste des Elèves</th>
+			<th>Actions</th>
+		</tr>{%for dicColle in listeColles%}
+		<tr>
+			<td>{{dicColle.colle.date}}</td>
+			<td>{{dicColle.colle.groupColle.numero}}</td>
+			<td>{%for note in dicColle.notes%}{{note.eleve}}({{note.valeur}}) {%endfor%}</td>
+			<td><object class="boutonmodifiercolle clicable" name="Colle{{dicColle.colle.id}}">Modifier</object>
+				<object class="boutonsupprimercolle clicable" name="Colle{{dicColle.colle.id}}">Supprimer</object></td>
+		</tr>{%endfor%}
+	</table>
+</section>
+{%endblock%}
+
+
+{%block donnees%}
+<donnees id="listedonnees">
+	{%for groupeColle in listeGroupesColle%}
+	<groupeColle id="groupeColle{{groupeColle.groupe.id}}" groupeColleId="{{groupeColle.groupe.id}}">
+		<semestre>{{groupeColle.groupe.semestre}}</semestre>
+		<numero>{{groupeColle.groupe.numero}}</numero>
+		{%for eleve in groupeColle.eleves%}
+		<eleve id="eleve{{eleve.id}}" eleveId="{{eleve.id}}">
+			<nom>{{eleve.last_name}}</nom>
+			<prenom>{{eleve.first_name}}</prenom>
+		</eleve>
+		{%endfor%}
+	</groupeColle>
+	{%endfor%}
+	{%for dicColle in listeColles%}
+	<colle id="Colle{{dicColle.colle.id}}">
+		<semestre>{{dicColle.colle.semestre}}</semestre>
+		<date>{{dicColle.colle.date|date:"Y-m-d"}}</date>
+		<horaire>{{dicColle.colle.horaire}}</horaire>
+		<salle>{{dicColle.colle.salle}}</salle>
+		<sujet>{{dicColle.colle.sujet}}</sujet>
+		<groupe>{{dicColle.colle.groupColle.numero}}</groupe>
+		<colleid>{{dicColle.colle.id}}</colleid>
+		{%for note in dicColle.notes%}
+		<note noteid="{{note.id}}">
+			<eleve eleveid="{{note.eleve.id}}" elevenom="{{note.eleve.last_name}}" eleveprenom="{{note.eleve.first_name}}"></eleve>
+			<valeur>{{note.valeur}}</valeur>
+		</note>
+		{%endfor%}
+	</colle>
+	{%endfor%}
+	<semestre id="semestre">{{semestre}}</semestre>
+</donnees>
+
+
+{%endblock%}

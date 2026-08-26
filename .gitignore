@@ -1,0 +1,17 @@
+#Fichiers de configuration
+.env
+
+#Environnement Virtuel
+venv/
+
+#fichiers compilés de python
+__pycache__/
+
+#base de données locale
+*.sqlite3
+
+#fichiers téléversés
+fichiersTeleverse
+
+#fichiers temporaires
+*.swp

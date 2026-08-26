@@ -1,0 +1,15 @@
+{%extends "../layout.html"%}
+
+{%block contenu%}
+{%for matiere, programme in listeProgrammes.items%}
+<section class="Programme">
+	<div class="TitreProgramme">
+		<h2>Programme semaine {{programme.semaine}}</h2>
+		<h3>{{matiere}}</h3>
+	</div>
+	<p>
+		{{programme.programme|safe}}
+	</p>
+</section>
+{%endfor%}
+{%endblock%}

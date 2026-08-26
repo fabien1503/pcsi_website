@@ -1,0 +1,9 @@
+{%extends "../layout.html"%}
+
+{%block contenu%}
+<section class="formConnexion">
+    <h2 style="color: red;">Lien d'activation invalide </h2>
+    <p>Ce lien a expiré (durée max : 48h) ou a déjà été utilisé pour activer ce compte.</p>
+    <p><a href="{% url 'inscription' %}">Recommencer l'inscription</a></p>
+</section>
+{%endblock%}

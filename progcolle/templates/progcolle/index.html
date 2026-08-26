@@ -1,0 +1,31 @@
+{%extends "../layout.html"%}
+
+{%block contenu%}
+<section class="Programme">
+	<h2>Programme de colle de la semaine en cours</h2>
+	<div class="versiontext">
+		<h3>Version texte</h3>
+		{{programme_de_la_semaine.programme|safe}}
+	</div>
+	<div class="vesionhtml">
+		<h3>Version html</h3>
+		<pre>{{programme_de_la_semaine.programme}}</pre>
+	</dic>
+</section>
+
+<aside>
+	{%for programme in programmes%}
+	<a href="/profprog/modifier/{{programme.id}}">Programme semaine {{programme.semaine}}</a><a href="/profprog/supprimer/{{programme.id}}">(suppr)</a></br>
+	{%endfor%}
+</aside>
+
+
+<section class="nouveauprog">
+	<h2>{{titre_programme}}</h2>
+	<form method="post">{% csrf_token %}
+    	{{ form.as_p }}
+    	<input class="bouton" type="submit" value="{{titre_bouton}}">
+	</form>
+
+</section>
+{%endblock%}
