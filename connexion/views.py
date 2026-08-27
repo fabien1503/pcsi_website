@@ -67,7 +67,7 @@ class Inscription(CreateView):
 		current_site = get_current_site(self.request)
 		uid = urlsafe_base64_encode(force_bytes(user.pk))
 		token = generateur_token.make_token(user)
-		lien_activation = f"http://{current_site.domain}/connexion/activer/{uid}/{token}/"
+		lien_activation = f"https://{current_site.domain}/connexion/activer/{uid}/{token}/"
 
 		# 3. Préparation et envoi de l'e-mail HTML
 		sujet = "Activez votre compte"
