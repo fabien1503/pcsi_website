@@ -194,14 +194,25 @@ footer p
 	text-align: justify;
 	width:450px;
 	vertical-align:top;
+	padding: 2px;
 }
 
-.vesionhtml
+.versionhtml
 {
 	vertical-align:top;
 	display:inline-block;
 	text-align: justify;
-	width:450px;	
+	width:450px;
+	max-width: 100%;
+	padding: 2px;	
+}
+
+.versionhtml pre
+{
+	display: block;
+	width: 450px;
+	max-width: 100%;
+	overflow-x: auto; 
 }
 
 aside
