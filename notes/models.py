@@ -19,6 +19,9 @@ class GroupColle(models.Model):
 			liste.append(eleve)
 		return liste
 
+	class Meta:
+		ordering=["numero"]
+
 
 
 class Colle(models.Model):
