@@ -1,7 +1,5 @@
 //Modification du choix du semestre
 const SEMESTRE = document.getElementById("semestre").textContent
-const ADRESSE = "127.0.0.1:8000"
-
 
 
 //Définition des variables
@@ -259,10 +257,23 @@ function enregistrerNouvelleColle(event){
 		const form = document.getElementById("formulaire")
 		const donneesForm = new FormData(form)
 
+		// On gère la réponse du serveur avant de recharger
+        XHR.onload = function() {
+            if (XHR.status >= 200 && XHR.status < 300) {
+                // La requête a réussi, on recharge la page
+                rechargerPage();
+            } else {
+                alert("Erreur lors de l'enregistrement sur le serveur.");
+            }
+        };
+
+        XHR.onerror = function() {
+            alert("Erreur réseau impossible de joindre le serveur.");
+        };
+
 		//On prépare la requette
-		XHR.open("POST", `http://${ADRESSE}/notes/colleur/nouvellecolle`)
+		XHR.open("POST", `/notes/colleur/nouvellecolle`)
 		XHR.send(donneesForm)//On envoie les données du formulaire
-		setTimeout(rechargerPage, delaiAttente)//On recharge la page après l'envoi au serveur
 	}
 }
 
@@ -377,11 +388,24 @@ function modifierAncienneColle(event){
 		const form = document.getElementById("formulaire")
 		const donneesForm = new FormData(form)
 
+		// On gère la réponse du serveur avant de recharger
+        XHR.onload = function() {
+            if (XHR.status >= 200 && XHR.status < 300) {
+                // La requête a réussi, on recharge la page
+                rechargerPage();
+            } else {
+                alert("Erreur lors de l'enregistrement sur le serveur.");
+            }
+        };
+
+        XHR.onerror = function() {
+            alert("Erreur réseau impossible de joindre le serveur.");
+        };
+
 		
 		//On prépare la requette
-		XHR.open("POST", `http://${ADRESSE}/notes/colleur/modifiercolle/`+colleId)
+		XHR.open("POST", `/notes/colleur/modifiercolle/`+colleId)
 		XHR.send(donneesForm)//On envoie les données du formulaire
-		setTimeout(rechargerPage,delaiAttente)
 	}
 }
 
@@ -398,9 +422,23 @@ function SupprimerColle(event){
 
 	//On envoie la demande de suppression au serveur
 	if (resultat){
-	const XHR = new XMLHttpRequest()
-		XHR.open("GET", `http://${ADRESSE}/notes/colleur/supprimercolle/`+colleId)
+		const XHR = new XMLHttpRequest()
+
+		// On gère la réponse du serveur avant de recharger
+        XHR.onload = function() {
+            if (XHR.status >= 200 && XHR.status < 300) {
+                // La requête a réussi, on recharge la page
+                rechargerPage();
+            } else {
+                alert("Erreur lors de l'enregistrement sur le serveur.");
+            }
+        };
+
+        XHR.onerror = function() {
+            alert("Erreur réseau impossible de joindre le serveur.");
+        };
+
+		XHR.open("GET", `/notes/colleur/supprimercolle/`+colleId)
 		XHR.send()
-		setTimeout(rechargerPage,delaiAttente)
 	}
 }
