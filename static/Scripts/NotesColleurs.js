@@ -1,5 +1,6 @@
 //Modification du choix du semestre
 const SEMESTRE = document.getElementById("semestre").textContent
+const ADRESSE = "127.0.0.1:8000"
 
 
 
@@ -259,7 +260,7 @@ function enregistrerNouvelleColle(event){
 		const donneesForm = new FormData(form)
 
 		//On prépare la requette
-		XHR.open("POST", "http://127.0.0.1:8000/notes/colleur/nouvellecolle")
+		XHR.open("POST", `http://${ADRESSE}/notes/colleur/nouvellecolle`)
 		XHR.send(donneesForm)//On envoie les données du formulaire
 		setTimeout(rechargerPage, delaiAttente)//On recharge la page après l'envoi au serveur
 	}
@@ -378,7 +379,7 @@ function modifierAncienneColle(event){
 
 		
 		//On prépare la requette
-		XHR.open("POST", "http://127.0.0.1:8000/notes/colleur/modifiercolle/"+colleId)
+		XHR.open("POST", `http://${ADRESSE}/notes/colleur/modifiercolle/`+colleId)
 		XHR.send(donneesForm)//On envoie les données du formulaire
 		setTimeout(rechargerPage,delaiAttente)
 	}
@@ -398,7 +399,7 @@ function SupprimerColle(event){
 	//On envoie la demande de suppression au serveur
 	if (resultat){
 	const XHR = new XMLHttpRequest()
-		XHR.open("GET", "http://127.0.0.1:8000/notes/colleur/supprimercolle/"+colleId)
+		XHR.open("GET", `http://${ADRESSE}/notes/colleur/supprimercolle/`+colleId)
 		XHR.send()
 		setTimeout(rechargerPage,delaiAttente)
 	}
