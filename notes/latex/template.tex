@@ -1,0 +1,76 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[landscape, margin=1.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{xcolor}
+
+\graphicspath{CHEMINGRAPHIQUES}
+
+\pagestyle{empty}
+
+\begin{document}
+
+% En-tête avec les logos intégrés dans l'image jointe
+\noindent
+\begin{minipage}{\textwidth}
+    \includegraphics[height=2.2cm]{logo.png} % Nom de l'image à adapter au besoin
+\end{minipage}
+
+\vspace{0.3cm}
+
+% Titre principal
+\begin{center}
+    {\Large \bfseries Suivi des heures d'interrogation en C.P.G.E. -- 2026/2027}
+\end{center}
+
+
+% Informations Enseignant et Classe
+\noindent
+\begin{tabular}{@{}ll p{2cm} ll@{}}
+    \textbf{DISCIPLINE :} & \makebox[6.5cm]{SCRIBEDISCIPLINE\hrulefill} & & \textbf{CLASSE :} & \makebox[3cm]{SCRIBECLASSE\hrulefill} \quad \textbf{MOIS :} \makebox[4.5cm]{SCRIBEMOIS\hrulefill} \\[0.3cm]
+    \textbf{NOM :} & \makebox[6.5cm]{SCRIBE_NOM\hrulefill} & & \textbf{Prénom :} & \makebox[9.5cm]{SCRIBEPRENOM\hrulefill}
+\end{tabular}
+
+
+\begin{center}
+    \underline{\textcolor{red}{\bfseries\itshape Un état par classe et par mois}}
+\end{center}
+
+\vspace{0.3cm}
+
+% Tableau central des heures
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+\noindent
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{1.5cm}|>{\centering\arraybackslash}m{1.5cm}|>{\centering\arraybackslash}m{1.2cm}|>{\centering\arraybackslash}m{1.5cm}|>{\centering\arraybackslash}X|>{\centering\arraybackslash}m{1.5cm}|>{\centering\arraybackslash}m{1.5cm}|>{\centering\arraybackslash}X|}
+    \hline
+    \textbf{Date} & \textbf{Horaire} & \textbf{Salle} & \textbf{N° Groupe} & \textbf{Nom des étudiants} & \textbf{Présent} & \textbf{Absent} & \textbf{Sujet} \\
+    \hline
+    SCRIBETABLEAU
+
+\end{tabularx}
+
+\vspace{0.6cm}
+
+% Section Totaux et Signatures
+\noindent
+\begin{tabularx}{\textwidth}{@{}X p{2cm} X@{}}
+    Nombre d'heures déclarées : \makebox[3cm]{SCRIBENOMBREHEURE\hrulefill} & & Nombre d'heures déclarées : \makebox[3cm]{\hrulefill} \\
+    Nombre d'étudiants déclarés : \makebox[2.6cm]{SCRIBENOMBREETUDIANT\hrulefill} & & Nombre d'étudiants déclarés : \makebox[2.6cm]{\hrulefill} \\[0.5cm]
+    Evreux, le \makebox[3cm]{\hrulefill} & & Evreux, le \makebox[3cm]{\hrulefill} \\
+    Signature du professeur, & & La Proviseure \\[0.2cm]
+    & & Anne TROLETTI
+\end{tabularx}
+
+\vfill
+
+% Note d'information de bas de page
+\begin{center}
+    \textbf{A déposer au secrétariat de direction ou retourner par mail à Mme CHABRIDON au ce.0270016w@ac-normandie.fr}
+\end{center}
+
+\end{document}

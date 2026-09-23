@@ -370,6 +370,17 @@ table .clicable:hover
 	margin-left: 50px;
 }
 
+#creationdocadministratif a
+{
+	text-decoration: none;
+	color: black;
+}
+
+#formulaireadministratif
+{
+	padding-bottom: 9px;
+}
+
 .centrer
 {
 	text-align: center;
