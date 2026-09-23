@@ -1,0 +1,16 @@
+{%extends "../layout.html"%}
+
+{%block contenu%}
+<section id="formulaireadministratif">
+<h2>Création du document administratif</h2>
+<form method="post">{% csrf_token %}
+    <label for="mois">De quel mois souhaitez vous créer le document administratif ?</label>
+    <select name=mois>
+    	{%for mois in listeMois%}
+    	<option value={{mois.1}}>{{mois.0}}</option>
+    	{%endfor%}
+    </select>
+    <input type="submit" value="Générer le document">
+</form>
+</section>
+{%endblock%}

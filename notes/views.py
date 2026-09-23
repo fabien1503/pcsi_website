@@ -1,15 +1,20 @@
 
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.views.generic.edit import FormMixin
+from django.views.generic.edit import FormMixin, FormView, ProcessFormView
 from django.views.generic.base import TemplateView, RedirectView, View
-from django.http import HttpResponsePermanentRedirect
-from django.urls import reverse
+from django.http import HttpResponsePermanentRedirect, FileResponse, Http404
+from django.urls import reverse, reverse_lazy
+from django.db.models import Prefetch
 
 from .models import Note, Colle, GroupColle
+from .formulaires import DocAdminForm
 from connexion.models import Colleur
 from config.semestre import get_semestre
+from .scribe import Scribe
 
+from pathlib import Path
 import datetime
+import locale
 
 
 class EleveNotes(LoginRequiredMixin, TemplateView):
@@ -219,3 +224,66 @@ class SupprimerColle(PermissionRequiredMixin, RedirectView):
 		#On rediride vers la page où en rentre les notes colleurs:
 		url = reverse("colleurNotes")
 		return HttpResponsePermanentRedirect(url)
+
+
+
+class DocumentAdministratif(PermissionRequiredMixin, FormMixin, ProcessFormView, TemplateView):
+	permission_required = "notes.add_colle"
+	permission_denied_message = "Vous n'avez pas les droits de colleurs pour accéder à cette page."
+
+	template_name = "notes/formDocAdmin.html"
+	form_class = DocAdminForm
+
+	success_url = "/"
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+
+		#On va chercher les mois où le colleur à effectuer des colles:
+		liste_colles = Colle.objects.filter(colleur__colleur_id__exact=self.request.user.id)
+
+		locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
+
+		liste_mois = []
+		liste_retour = []
+		for colle in liste_colles:
+			if colle.date.month not in liste_mois:
+				liste_retour.append((colle.date.strftime("%B"), colle.date.month))
+				liste_mois.append(colle.date.month)
+		
+		#On ajoute les mois dans le contexte
+		context["listeMois"] = liste_retour
+
+		return context
+
+	def get_success_url(self):
+		#Aller chercher l'adresse du PDF généré
+		self.success_url = reverse_lazy("afficherdocumentadministratif")
+		return super().get_success_url()
+
+
+	def form_valid(self, form):
+		#Aller chercher les colles du mois sélectionné
+
+		listeColles = Colle.objects.filter(colleur__colleur_id__exact=self.request.user.id).filter(date__month__exact=form.cleaned_data["mois"]).prefetch_related("note_set")
+
+		locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
+		
+		#Générer le PDF du document administratif
+		scribe = Scribe(self.request.user, listeColles[0].date.strftime("%B").capitalize(), listeColles)
+		scribe.compilerDocument()
+
+
+		return super().form_valid(form)
+
+class AfficherDocumentAdministratif(PermissionRequiredMixin, View):
+	permission_required = "notes.add_colle"
+	permission_denied_message = "Vous n'avez pas les droits de colleurs pour accéder à cette page."
+
+	def get(self, request, *args, **kwargs):
+		cheminFichier = str(Path(__file__).resolve().parent.parent)+"/fichiersTeleverse/DocAdministratif/"+str(request.user.id)+".pdf"
+		print(cheminFichier)
+		try:
+			return FileResponse(open(cheminFichier, 'rb'), content_type='application/pdf')
+		except FileNotFoundError:
+			raise Http404()
