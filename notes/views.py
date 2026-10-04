@@ -45,7 +45,10 @@ class EleveNotes(LoginRequiredMixin, TemplateView):
 					listeDate.append(note.colle.date)
 					listeValeur.append(note.valeur)
 
-				moyenne = round(self.calculerMoyenne(listeValeur),2)
+				try :
+					moyenne = round(self.calculerMoyenne(listeValeur),2)
+				except:
+					moyenne = "NN"
 
 				listeNotesBySemestre.append({"semestre": semestre, "listeColleur": listeColleur, "listeDate":listeDate, "listeValeur":listeValeur, "moyenne": moyenne})
 
@@ -96,7 +99,10 @@ class EleveNotes(LoginRequiredMixin, TemplateView):
 				if valeur=="A":
 					l.append(0)
 
-		return sum(l)/len(l)
+		if len(l)==0:
+			return "NN"
+		else:
+			return sum(l)/len(l)
 
 
 
