@@ -1,6 +1,3 @@
-//Constantes
-const delaiAttente = 200
-const adresse = "http://127.0.0.1:8000"
 
 //On enlève le choix correction du selected
 const nature = document.getElementById("id_nature")
