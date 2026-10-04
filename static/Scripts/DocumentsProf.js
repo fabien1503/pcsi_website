@@ -49,7 +49,7 @@ function SupprimerDoc(event){
         };
 
 		//On prépare la requette
-		XHR.open("GET", adresse+"/documents/supprimer/"+docASupprimer)
+		XHR.open("GET", "/documents/supprimer/"+docASupprimer)
 		XHR.send()
 	}
 }
