@@ -34,9 +34,23 @@ function SupprimerDoc(event){
 	//On envoie la demande de suppression au serveur
 	if (resultat){
 	const XHR = new XMLHttpRequest()
+		// On gère la réponse du serveur avant de recharger
+        XHR.onload = function() {
+            if (XHR.status >= 200 && XHR.status < 300) {
+                // La requête a réussi, on recharge la page
+                rechargerPage();
+            } else {
+                alert("Erreur lors de l'enregistrement sur le serveur.");
+            }
+        };
+
+        XHR.onerror = function() {
+            alert("Erreur réseau impossible de joindre le serveur.");
+        };
+
+		//On prépare la requette
 		XHR.open("GET", adresse+"/documents/supprimer/"+docASupprimer)
 		XHR.send()
-		setTimeout(rechargerPage,delaiAttente)
 	}
 }
 
